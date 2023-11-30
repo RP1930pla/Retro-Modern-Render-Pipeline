@@ -7,7 +7,7 @@ public class RMRPAsset : RenderPipelineAsset
 {
     protected override RenderPipeline CreatePipeline()
     {
-        return null;
+        return new RMRenderPipeline();
     }
 
 
