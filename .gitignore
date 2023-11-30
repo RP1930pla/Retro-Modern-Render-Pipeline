@@ -2,13 +2,13 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
-/[Ll]ibrary/
-/[Tt]emp/
-/[Oo]bj/
-/[Bb]uild/
-/[Bb]uilds/
-/[Ll]ogs/
-/[Uu]ser[Ss]ettings/
+Retro Modern Render Pipeline/[Ll]ibrary/
+Retro Modern Render Pipeline/[Tt]emp/
+Retro Modern Render Pipeline/[Oo]bj/
+Retro Modern Render Pipeline/[Bb]uild/
+Retro Modern Render Pipeline/[Bb]uilds/
+Retro Modern Render Pipeline/[Ll]ogs/
+Retro Modern Render Pipeline/[Uu]ser[Ss]ettings/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
