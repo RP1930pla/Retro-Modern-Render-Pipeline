@@ -37,6 +37,7 @@ public partial class CameraRenderer
         //Draw commands
         DrawVisibleGeometry();
         DrawUnsuportedShaders();
+        DrawGizmos();
         Submit();
     }
 
