@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Profiling;
 using UnityEngine.Rendering;
 
 public partial class CameraRenderer
@@ -20,10 +21,20 @@ public partial class CameraRenderer
     public static ShaderTagId unlitShaderTagId = new ShaderTagId("SRPDefaultUnlit");
     #endregion
 
+    #if UNITY_EDITOR
+    string SampleName { get; set; }
+    #else
+    string SampleName => cameraBufferName;
+    #endif
+
     public void Render(ScriptableRenderContext context, Camera camera)
     {
         this.context = context;
         this.camera = camera;
+
+        //Draw UI in scene view
+        PrepareBuffer();
+        PrepareUIForSceneWindow();
 
         //Cull Object first
         if (!CullObjects())
@@ -60,12 +71,11 @@ public partial class CameraRenderer
     void Setup()
     {
         context.SetupCameraProperties(camera);
-
+        CameraClearFlags flagsToClear = camera.clearFlags;
         //Clean render buffer before rendering again
-        cameraBuffer.ClearRenderTarget(true, true, Color.clear);
-
+        cameraBuffer.ClearRenderTarget(flagsToClear <= CameraClearFlags.Depth, flagsToClear <= CameraClearFlags.Color, flagsToClear == CameraClearFlags.Color ? camera.backgroundColor.linear : Color.clear);
         //Show command buffer loop on Frame Debugger
-        cameraBuffer.BeginSample(cameraBufferName);
+        cameraBuffer.BeginSample(SampleName);
 
         ExecuteBuffer();
     }
@@ -99,7 +109,7 @@ public partial class CameraRenderer
     //Always last to be called
     void Submit()
     {
-        cameraBuffer.EndSample(cameraBufferName);
+        cameraBuffer.EndSample(SampleName);
         ExecuteBuffer();
         context.Submit();
     }
