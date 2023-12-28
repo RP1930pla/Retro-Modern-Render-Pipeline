@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
+//called in tutorials CustomRenderPipeline : RenderPipeline
 public class RMRenderPipeline : RenderPipeline
 {
     //CAMERAS
     CameraRenderer renderer = new CameraRenderer();
-
+    public RMRenderPipeline()
+    {
+        GraphicsSettings.useScriptableRenderPipelineBatching = true;
+    }
     protected override void Render(ScriptableRenderContext context, Camera[] cameras)
     {
         

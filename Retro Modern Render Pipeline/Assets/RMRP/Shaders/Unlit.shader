@@ -2,7 +2,7 @@ Shader "RMRP/Unlit"
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "white" {}
+        _BaseColor("Color", Color) = (1.0,1.0,1.0,1.0)
     }
     SubShader
     {
@@ -12,6 +12,7 @@ Shader "RMRP/Unlit"
         Pass
         {
             HLSLPROGRAM
+            #pragma multi_compile_instancing
             #pragma vertex UnlitPassVertex
             #pragma fragment UnlitPassFragment
 
