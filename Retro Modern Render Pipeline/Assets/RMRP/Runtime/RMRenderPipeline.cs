@@ -13,6 +13,7 @@ public class RMRenderPipeline : RenderPipeline
     GlobalKeyword FPU = GlobalKeyword.Create("_NO_FPU");
     GlobalKeyword AFFINE_TEXTURE = GlobalKeyword.Create("_AFFINE_TEXTURE");
     int _Global_VirtualRes = Shader.PropertyToID(nameof(_Global_VirtualRes));
+
     //INSTANCING OPTIONS
     bool useDynamicBatching,useGPUInstancing;
 
