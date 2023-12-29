@@ -27,7 +27,7 @@ public partial class CameraRenderer
     string SampleName => cameraBufferName;
     #endif
 
-    public void Render(ScriptableRenderContext context, Camera camera)
+    public void Render(ScriptableRenderContext context, Camera camera, bool useDynamicBatching, bool useGPUInstancing)
     {
         this.context = context;
         this.camera = camera;
@@ -46,7 +46,7 @@ public partial class CameraRenderer
         Setup();
 
         //Draw commands
-        DrawVisibleGeometry();
+        DrawVisibleGeometry(useDynamicBatching,useGPUInstancing);
         DrawUnsuportedShaders();
         DrawGizmos();
         Submit();
@@ -81,13 +81,17 @@ public partial class CameraRenderer
     }
 
 
-    void DrawVisibleGeometry()
+    void DrawVisibleGeometry(bool useDynamicBatching, bool useGPUInstancing)
     {
         //Setup everything for drawing opaque and skybox objects
         //Sorting info based on camera
         var sortingSettings = new SortingSettings(camera) { criteria = SortingCriteria.CommonOpaque};
         //Drawings settings of each renderer in the scene that is not culled
-        var drawingSettings = new DrawingSettings(unlitShaderTagId,sortingSettings);
+        var drawingSettings = new DrawingSettings(unlitShaderTagId, sortingSettings)
+        {
+            enableDynamicBatching = useDynamicBatching,
+            enableInstancing = useGPUInstancing
+        };
         //Render layers of each renderer
         var filteringSettings = new FilteringSettings(RenderQueueRange.opaque);
 
