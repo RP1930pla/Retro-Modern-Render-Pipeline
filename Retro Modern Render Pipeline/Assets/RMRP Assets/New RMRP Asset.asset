@@ -10,5 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2aa567359b5859244b4d5d8d64038a5b, type: 3}
-  m_Name: RMRP Asset
+  m_Name: New RMRP Asset
   m_EditorClassIdentifier: 
+  useDynamicBatching: 0
+  useGPUInstancing: 1
+  useSRPBatcher: 1
+  noFPU: 0
+  affineTextureMapping: 1

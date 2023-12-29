@@ -2,6 +2,7 @@
 #define UNLIT_PASS_INCLUDED
 
 #include "Assets/RMRP/ShaderLib/Common.hlsl"
+#include "Assets/RMRP/ShaderLib/RetroFX.hlsl"
 
 struct Input
 {
@@ -13,7 +14,7 @@ struct Input
 struct Output
 {
     float4 posCS : SV_POSITION;
-    float2 uv : TEXCOORD0;
+    AFFINE_UV float2 uv : TEXCOORD0;
     UNITY_VERTEX_INPUT_INSTANCE_ID
 };
 
@@ -36,6 +37,7 @@ Output UnlitPassVertex(Input i)
 
     float3 posWS = TransformObjectToWorld(i.position.xyz);
     o.posCS = TransformWorldToHClip(posWS);
+    SNAP_TO_PIXEL(o.posCS);
 
     o.uv = i.uv * IMPS(_BaseMap_ST).xy + IMPS(_BaseMap_ST).zw;
     return o;
@@ -49,6 +51,8 @@ float4 UnlitPassFragment(Output i) : SV_TARGET
         clip(baseTexture * IMPS(_BaseColor).a - IMPS(_Cutoff));
     #endif
     return baseTexture * IMPS(_BaseColor);
+
+
 }
 
 

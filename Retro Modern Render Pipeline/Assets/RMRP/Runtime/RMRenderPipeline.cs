@@ -9,13 +9,24 @@ public class RMRenderPipeline : RenderPipeline
     //CAMERAS
     CameraRenderer renderer = new CameraRenderer();
 
+    //CACHED GLOBAL KEYWORDS & VARIABLES
+    GlobalKeyword FPU = GlobalKeyword.Create("_NO_FPU");
+    GlobalKeyword AFFINE_TEXTURE = GlobalKeyword.Create("_AFFINE_TEXTURE");
+    int _Global_VirtualRes = Shader.PropertyToID(nameof(_Global_VirtualRes));
     //INSTANCING OPTIONS
     bool useDynamicBatching,useGPUInstancing;
-    public RMRenderPipeline(bool useDynamicBatching, bool useGPUInstancing, bool useSRPBatcher)
+
+    public RMRenderPipeline(bool useDynamicBatching, bool useGPUInstancing, bool useSRPBatcher, bool noFPU, bool affineTexture, Vector2 virtualRes)
     {
         this.useDynamicBatching = useDynamicBatching;
         this.useGPUInstancing = useGPUInstancing;
         GraphicsSettings.useScriptableRenderPipelineBatching = useSRPBatcher;
+
+        //Set Retro Defect Keywords
+        Shader.SetKeyword(FPU, noFPU);
+        Shader.SetKeyword(AFFINE_TEXTURE, affineTexture);
+        Shader.SetGlobalVector(_Global_VirtualRes, virtualRes);
+
     }
     protected override void Render(ScriptableRenderContext context, Camera[] cameras)
     {

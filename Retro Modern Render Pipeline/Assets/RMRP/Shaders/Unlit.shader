@@ -23,9 +23,14 @@ Shader "RMRP/Unlit"
 
             HLSLPROGRAM
             #pragma shader_feature _CLIPPING
+            #pragma multi_compile __ _AFFINE_TEXTURE
+            #pragma multi_compile __ _NO_FPU
+
             #pragma multi_compile_instancing
+
             #pragma vertex UnlitPassVertex
             #pragma fragment UnlitPassFragment
+
 
             #include "UnlitPass.hlsl"
             
