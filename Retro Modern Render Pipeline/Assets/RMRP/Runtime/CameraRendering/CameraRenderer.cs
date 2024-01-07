@@ -28,6 +28,8 @@ public partial class CameraRenderer
     string SampleName => cameraBufferName;
     #endif
 
+    Lighting lighting = new Lighting();
+
     public void Render(ScriptableRenderContext context, Camera camera, bool useDynamicBatching, bool useGPUInstancing)
     {
         this.context = context;
@@ -45,7 +47,7 @@ public partial class CameraRenderer
 
         //Setup camera properties
         Setup();
-
+        lighting.Setup(context);
         //Draw commands
         DrawVisibleGeometry(useDynamicBatching,useGPUInstancing);
         DrawUnsuportedShaders();
