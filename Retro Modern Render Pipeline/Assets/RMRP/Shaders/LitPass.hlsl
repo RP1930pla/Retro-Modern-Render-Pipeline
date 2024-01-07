@@ -3,7 +3,9 @@
 
 #include "Assets/RMRP/ShaderLib/Common.hlsl"
 #include "Assets/RMRP/ShaderLib/RetroFX.hlsl"
+
 #include "Assets/RMRP/ShaderLib/Surface.hlsl"
+#include "Assets/RMRP/ShaderLib/ModernLighting.hlsl"
 
 struct Input
 {
@@ -21,12 +23,15 @@ struct Output
     UNITY_VERTEX_INPUT_INSTANCE_ID
 };
 
+//#region shader buffer properties 
 UNITY_INSTANCING_BUFFER_START(UnityPerMaterial)
     UNITY_DEFINE_INSTANCED_PROP(float4, _BaseMap_ST)
     UNITY_DEFINE_INSTANCED_PROP(float4,_BaseColor)
     UNITY_DEFINE_INSTANCED_PROP(float,_Cutoff)
 UNITY_INSTANCING_BUFFER_END(UnityPerMaterial)
+///Access buffer property
 #define IMPS(property) UNITY_ACCESS_INSTANCED_PROP(UnityPerMaterial, property)
+//#endregion
 
 TEXTURE2D(_BaseMap);
 SAMPLER(sampler_BaseMap);
@@ -55,10 +60,14 @@ float4 LitPassFragment(Output i) : SV_TARGET
     #if defined(_CLIPPING)
         clip(baseTexture * IMPS(_BaseColor).a - IMPS(_Cutoff));
     #endif
+    
+    Surface surface;
+    surface.color = baseTexture.rgb * IMPS(_BaseColor).rgb;
+    surface.normal = normalize(i.normalWS);
+    surface.alpha = baseTexture.a * IMPS(_BaseColor).a;
 
-    float3 nNormal = normalize(i.normalWS);
-    return nNormal.rgbb;
-    return baseTexture * IMPS(_BaseColor);
+    float3 color = GetLighting(surface);
+    return float4(color,surface.alpha);
 
 
 }
