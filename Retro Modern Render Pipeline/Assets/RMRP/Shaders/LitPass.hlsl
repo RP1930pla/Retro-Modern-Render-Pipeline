@@ -3,6 +3,7 @@
 
 #include "Assets/RMRP/ShaderLib/Common.hlsl"
 #include "Assets/RMRP/ShaderLib/RetroFX.hlsl"
+#include "Assets/RMRP/ShaderLib/Surface.hlsl"
 
 struct Input
 {
