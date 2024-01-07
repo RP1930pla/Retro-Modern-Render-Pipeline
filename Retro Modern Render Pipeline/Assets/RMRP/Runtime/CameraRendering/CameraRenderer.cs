@@ -18,7 +18,8 @@ public partial class CameraRenderer
 
     #region Shader Tags
     //Shader Tags used for rendering
-    public static ShaderTagId unlitShaderTagId = new ShaderTagId("SRPDefaultUnlit");
+    public static ShaderTagId unlitShaderTagId = new ShaderTagId("SRPDefaultUnlit"),
+        litShaderTagId = new ShaderTagId("CustomLit");
     #endregion
 
     #if UNITY_EDITOR
@@ -92,6 +93,10 @@ public partial class CameraRenderer
             enableDynamicBatching = useDynamicBatching,
             enableInstancing = useGPUInstancing
         };
+
+        //Add here all passes
+        drawingSettings.SetShaderPassName(1, litShaderTagId);
+
         //Render layers of each renderer
         var filteringSettings = new FilteringSettings(RenderQueueRange.opaque);
 
